@@ -8,7 +8,7 @@ class CitySearchSuccess extends CitySearchState{
   final CitySearchResult citySearchResult;
   CitySearchSuccess(this.citySearchResult);
 }
-class CitySearchFailed extends CitySearchResult{
+class CitySearchFailed extends CitySearchState{
   final String errorMessage;
   CitySearchFailed(this.errorMessage);
 }
