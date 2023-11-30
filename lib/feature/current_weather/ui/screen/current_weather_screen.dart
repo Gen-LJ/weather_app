@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_weather_app/feature/current_weather/data/model/current_weather_model.dart';
@@ -39,10 +40,20 @@ class _CurrentWeatherState extends ConsumerState<CurrentWeatherScreen> {
   Widget build(BuildContext context) {
     final currentWeatherState = ref.watch(currentWeatherProvider);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.indigo,
+      body: Stack(
+        children: [
+          _weatherWidget(currentWeatherState),
+          if(!kIsWeb)
+            SafeArea(
+              child: IconButton(
+                onPressed: (){
+                Navigator.pop(context);
+                },icon: Icon(Icons.arrow_back),
+              ),
+            )
+          
+        ],
       ),
-      body: _weatherWidget(currentWeatherState),
     );
   }
 

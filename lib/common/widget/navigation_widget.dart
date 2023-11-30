@@ -10,7 +10,9 @@ class NavigationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    double width = MediaQuery.of(context).size.width;
+    if(width<=490) {
+      return Scaffold(
       body: shell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: shell.currentIndex,
@@ -23,5 +25,24 @@ class NavigationWidget extends StatelessWidget {
         ],
       ),
     );
+    }
+    else{
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              onDestinationSelected: (index){
+                shell.goBranch(index);
+              },
+                destinations: [
+                  NavigationRailDestination(icon: Icon(Icons.home), label: Text('Home')),
+                  NavigationRailDestination(icon: Icon(Icons.settings), label: Text('Setting')),
+                ],
+                selectedIndex: shell.currentIndex),
+            Expanded(child: shell)
+          ],
+        ),
+      );
+    }
   }
 }

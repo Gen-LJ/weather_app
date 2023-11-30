@@ -45,23 +45,28 @@ class CurrentWeatherWidget extends StatelessWidget {
                 child: Center(
                   child: Text(
                     '${current.currentWeather?.weathercode?.toCondition().toEmoji()}',
-                    style: TextStyle(fontSize: 40),
+                    style: TextStyle(fontSize: 70,color: Colors.white),
+
                   ),
                 ),
               ),
               Expanded(
-                child: Text('${current.currentWeather?.weathercode?.toCondition()}',style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold
-                ),),
+                child: Center(
+                  child: Text('${current.currentWeather?.weathercode?.toCondition()}',style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold
+                  ),),
+                ),
               ),
               Expanded(
-                child: Text('${current.currentWeather?.temperature ?? ''} ${current.currentWeatherUnits?.temperature}',style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold
-                ),),
+                child: Center(
+                  child: Text('${current.currentWeather?.temperature ?? ''} ${current.currentWeatherUnits?.temperature}',style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold
+                  ),),
+                ),
               )
             ],
           )
