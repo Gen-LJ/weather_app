@@ -1,36 +1,43 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_weather_app/feature/current_weather/ui/screen/current_weather_screen.dart';
-import 'package:riverpod_weather_app/feature/search_city/ui/screen/city_search_screen.dart';
+import 'package:riverpod_weather_app/feature/theme/provider/theme_provider.dart';
+import 'package:riverpod_weather_app/feature/theme/provider/theme_state.dart';
+
+import 'common/const/route_list.dart';
+import 'common/widget/navigation_widget.dart';
 
 void main() {
   runApp( ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
    MyApp({super.key});
   final _router = GoRouter(
+    initialLocation: '/',
       routes: [
-      GoRoute(path: '/',
-      builder: (context,routeState){
-        return const CitySearchScreen();
-      }),
-        GoRoute(path: '/current',
-        builder: (context,routeState){
-          final query = routeState.extra as Map;
-          return  CurrentWeatherScreen(
-            latitude: query['lati']!,
-            longitude: query['longi']!,
-          city: query['city']!,);
-        })
+        StatefulShellRoute.indexedStack(
+          builder: (context,state,StatefulNavigationShell shell){
+            return NavigationWidget(shell: shell,);
+          },
+
+
+            branches: RouteList.routeList)
+
       ]);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    WeatherTheme weatherTheme = ref.watch(themeProvider);
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: weatherTheme.getTheme(),
       routerConfig: _router,
     );
   }
+
+
 }
 

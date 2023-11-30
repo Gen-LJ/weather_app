@@ -4,6 +4,8 @@ import 'package:riverpod_weather_app/feature/search_city/data/model/city_search_
 import 'package:riverpod_weather_app/feature/search_city/provider/city_search_provider.dart';
 import 'package:riverpod_weather_app/feature/search_city/provider/state/city_search_state.dart';
 import 'package:riverpod_weather_app/feature/search_city/ui/widget/city_list_widget.dart';
+import 'package:riverpod_weather_app/feature/theme/provider/theme_provider.dart';
+import 'package:riverpod_weather_app/feature/theme/provider/theme_state.dart';
 
 class CitySearchScreen extends ConsumerStatefulWidget {
   const CitySearchScreen({super.key});
@@ -19,9 +21,23 @@ class _CitySearchScreenState extends ConsumerState<CitySearchScreen> {
 
     CitySearchState citySearchState = ref.watch(citySearchProvider);
     CitySearchProvider provider = ref.read(citySearchProvider.notifier);
+    WeatherTheme weatherTheme = ref.watch(themeProvider);
+    ThemeNotifier weatherProvider = ref.read(themeProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Weather For Cities'),
+        actions: [
+          Switch(value: (weatherTheme is DarkTheme), onChanged: (value){
+            if(value){
+              weatherProvider.changeTheme(DarkTheme());
+            }
+            else{
+              weatherProvider.changeTheme(LightTheme());
+            }
+          })
+        ],
+      ),
       body: Column(
         children: [
           Padding(
@@ -29,7 +45,7 @@ class _CitySearchScreenState extends ConsumerState<CitySearchScreen> {
             child: TextField(
               controller: _citySearchController,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
 
                 ),
                 labelText: 'Search City',
@@ -37,13 +53,13 @@ class _CitySearchScreenState extends ConsumerState<CitySearchScreen> {
                   String city = _citySearchController.text.trim();
                   if(city.isEmpty){
                     ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('Please enter a city')));
+                        .showSnackBar(const SnackBar(content: Text('Please enter a city')));
                   }
                   else{
                     provider.searchCity(city);
                   }
                   
-                }, icon: Icon(Icons.search_rounded))
+                }, icon: const Icon(Icons.search_rounded))
               ),
             ),
           ),
@@ -55,10 +71,10 @@ class _CitySearchScreenState extends ConsumerState<CitySearchScreen> {
   Widget _citySearchResultWidget(CitySearchState citySearchState){
     return Center(
       child: switch(citySearchState){
-        CitySearchForm() => Text('Please search a city'),
-        CitySearchLoading() => CircularProgressIndicator(),
+        CitySearchForm() => const Text('Please search a city'),
+        CitySearchLoading() => const CircularProgressIndicator(),
         CitySearchSuccess( citySearchResult : CitySearchResult citySearchResult) => CityList(citySearchResult: citySearchResult),
-        CitySearchFailed(errorMessage : String error) => Text('error')
+        CitySearchFailed(errorMessage : String error) => const Text('error')
 
       },
     );
