@@ -31,6 +31,7 @@ class NavigationWidget extends StatelessWidget {
         body: Row(
           children: [
             NavigationRail(
+              labelType: NavigationRailLabelType.all,
               onDestinationSelected: (index){
                 shell.goBranch(index);
               },

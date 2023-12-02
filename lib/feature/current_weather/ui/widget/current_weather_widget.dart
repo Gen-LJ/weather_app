@@ -19,15 +19,16 @@ class CurrentWeatherWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xff5C6BC0),
-                Color(0xff3949AB),
-                Color(0xff283593),
-              ])),
+      // decoration: const BoxDecoration(
+      //     gradient: LinearGradient(
+      //         begin: Alignment.topCenter,
+      //         end: Alignment.bottomCenter,
+      //         colors: [
+      //           Color(0xff5C6BC0),
+      //           Color(0xff3949AB),
+      //           Color(0xff283593),
+      //         ])),
+      color: current.currentWeather?.weathercode?.toColor(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -131,6 +132,47 @@ extension on String {
         return '🌨️';
       default:
         return 'Unknown';
+    }
+  }
+}
+
+extension on num {
+  Color toColor() {
+    switch (this) {
+      case 0:
+        return Colors.red;
+      case 1:
+      case 2:
+      case 3:
+      case 45:
+      case 48:
+        return Colors.black;
+      case 51:
+      case 53:
+      case 55:
+      case 56:
+      case 57:
+      case 61:
+      case 63:
+      case 65:
+      case 66:
+      case 67:
+      case 80:
+      case 81:
+      case 82:
+      case 95:
+      case 96:
+      case 99:
+        return Colors.purple;
+      case 71:
+      case 73:
+      case 75:
+      case 77:
+      case 85:
+      case 86:
+        return Colors.grey;
+      default:
+        return Colors.indigo;
     }
   }
 }
