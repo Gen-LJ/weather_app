@@ -35,4 +35,5 @@ class DarkTheme extends WeatherTheme {
 
     );
   }
-}
+  }
+

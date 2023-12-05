@@ -4,8 +4,8 @@ import 'package:riverpod_weather_app/feature/search_city/data/model/city_search_
 import 'package:riverpod_weather_app/feature/search_city/provider/city_search_provider.dart';
 import 'package:riverpod_weather_app/feature/search_city/provider/state/city_search_state.dart';
 import 'package:riverpod_weather_app/feature/search_city/ui/widget/city_list_widget.dart';
-import 'package:riverpod_weather_app/feature/theme/provider/theme_provider.dart';
-import 'package:riverpod_weather_app/feature/theme/provider/theme_state.dart';
+import 'package:riverpod_weather_app/feature/theme/provider/theme_provider/theme_provider.dart';
+import 'package:riverpod_weather_app/feature/theme/provider/theme_provider/theme_state.dart';
 
 class CitySearchScreen extends ConsumerStatefulWidget {
   const CitySearchScreen({super.key});
@@ -27,16 +27,16 @@ class _CitySearchScreenState extends ConsumerState<CitySearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weather For Cities'),
-        actions: [
-          Switch(value: (weatherTheme is DarkTheme), onChanged: (value){
-            if(value){
-              weatherProvider.changeTheme(DarkTheme());
-            }
-            else{
-              weatherProvider.changeTheme(LightTheme());
-            }
-          })
-        ],
+        // actions: [
+        //   Switch(value: (weatherTheme is DarkTheme), onChanged: (value){
+        //     if(value){
+        //       weatherProvider.changeTheme(DarkTheme());
+        //     }
+        //     else{
+        //       weatherProvider.changeTheme(LightTheme());
+        //     }
+        //   })
+        // ],
       ),
       body: Column(
         children: [
